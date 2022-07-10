@@ -6,9 +6,6 @@ const PizzaBlock = ({ title, price, imageUrl, types, sizes }) => {
 
   const typeLabels = ['тонкое', 'традиционное'];
 
-  // const onClickType = (idx) => setActiveType(idx);
-  // const onClickSize = (idx) => setActiveSize(idx);
-
   return (
     <div className='pizza-block'>
       <img className='pizza-block__image' src={imageUrl} alt='Pizza' />
@@ -24,8 +21,6 @@ const PizzaBlock = ({ title, price, imageUrl, types, sizes }) => {
               {typeLabels[typeId]}
             </li>
           ))}
-          {/* <li className='active'>тонкое</li>
-          <li>традиционное</li> */}
         </ul>
         <ul>
           {sizes.map((size, idx) => (
