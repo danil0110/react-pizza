@@ -66,21 +66,27 @@ body {
     align-items: center;
   }
 
-  .content__title {
-    display: flex;
-    align-items: center;
-    font-size: 32px;
+  .content {
+    &__title {
+      display: flex;
+      align-items: center;
+      font-size: 32px;
 
-    svg {
-      position: relative;
-      top: -2px;
-      width: 30px;
-      height: 30px;
-      margin-right: 10px;
-      path {
-        stroke: $black;
-        stroke-width: 1.9;
+      svg {
+        position: relative;
+        top: -2px;
+        width: 30px;
+        height: 30px;
+        margin-right: 10px;
+        path {
+          stroke: $black;
+          stroke-width: 1.9;
+        }
       }
+    }
+
+    &__items {
+      display: block;
     }
   }
 
