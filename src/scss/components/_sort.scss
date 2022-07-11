@@ -9,7 +9,7 @@
     align-items: center;
 
     svg {
-      margin-right: 8px;
+      // margin-right: 8px;
     }
 
     b {
@@ -21,6 +21,12 @@
       border-bottom: 1px dashed $orange;
       cursor: pointer;
     }
+  }
+
+  &__arrow-wrapper {
+    // border: 1px solid $orange;
+    border-radius: 5px;
+    padding: 0 8px;
   }
 
   &__popup {

@@ -27,10 +27,22 @@ body {
 
   &__items {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(4, 1fr);
     justify-items: center;
-    column-gap: 20px;
+    column-gap: 45px;
     row-gap: 50px;
+
+    @media (max-width: 1500px) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    @media (max-width: 1140px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (max-width: 775px) {
+      grid-template-columns: repeat(1, 1fr);
+    }
   }
 
   &__top {
