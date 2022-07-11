@@ -1,0 +1,35 @@
+.container {
+  margin-top: 30px;
+  align-items: center;
+  display: flex;
+  gap: 10px;
+}
+
+.item {
+  border: 1px solid #fe5f1e;
+  border-radius: 10px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #fe5f1e;
+
+    .link {
+      color: #fff;
+    }
+  }
+}
+
+.link {
+  display: block;
+  line-height: 10px;
+  padding: 10px;
+  color: #fe5f1e;
+}
+
+.active {
+  background-color: #fe5f1e;
+
+  .link {
+    color: #fff;
+  }
+}
