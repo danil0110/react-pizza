@@ -1,6 +1,12 @@
 import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-const Sort = ({ options, onChangeSortOptions }) => {
+import { setSortOrder, setSortProperty } from '../store/filtersSlice';
+
+const Sort = () => {
+  const dispatch = useDispatch();
+  const options = useSelector((state) => state.filters.sort);
+
   const [open, setOpen] = useState(false);
 
   const sortByLabels = {
@@ -10,13 +16,13 @@ const Sort = ({ options, onChangeSortOptions }) => {
   };
 
   const onClickSortProperty = (value) => {
-    if (value !== options.property) onChangeSortOptions({ ...options, property: value });
+    if (value !== options.property) dispatch(setSortProperty(value));
     setOpen(false);
   };
 
   const onClickOrder = () => {
     const order = options.order === 'asc' ? 'desc' : 'asc';
-    onChangeSortOptions({ ...options, order });
+    dispatch(setSortOrder(order));
   };
 
   return (

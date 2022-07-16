@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 
 import Categories from '../components/Categories';
 import Sort from '../components/Sort';
@@ -10,17 +11,17 @@ import { SearchContext } from '../App';
 const Home = () => {
   const { searchValue } = useContext(SearchContext);
 
+  const activeCategoryId = useSelector((state) => state.filters.activeCategoryId);
+  const sortOptions = useSelector((state) => state.filters.sort);
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [categoryId, setCategoryId] = useState(0);
-  const [sortByOptions, setSortByOptions] = useState({ property: 'rating', order: 'asc' });
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
-    const { property, order } = sortByOptions;
+    const { property, order } = sortOptions;
     const page = `page=${currentPage}&limit=4`;
     const search = searchValue.trim().length > 0 ? `&search=${searchValue.trim()}` : '';
-    const category = categoryId > 0 ? `&category=${categoryId}` : '';
+    const category = activeCategoryId > 0 ? `&category=${activeCategoryId}` : '';
 
     setLoading(true);
     fetch(
@@ -33,13 +34,13 @@ const Home = () => {
       });
 
     window.scrollTo(0, 0);
-  }, [categoryId, sortByOptions, searchValue, currentPage]);
+  }, [activeCategoryId, sortOptions, searchValue, currentPage]);
 
   return (
     <div className='container'>
       <div className='content__top'>
-        <Categories value={categoryId} onClickCategory={(id) => setCategoryId(id)} />
-        <Sort options={sortByOptions} onChangeSortOptions={(obj) => setSortByOptions(obj)} />
+        <Categories />
+        <Sort />
       </div>
       <h2 className='content__title'>Все пиццы</h2>
       <div className='content__items'>
