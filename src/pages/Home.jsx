@@ -7,12 +7,14 @@ import PizzaBlock from '../components/PizzaBlock';
 import Skeleton from '../components/PizzaBlock/Skeleton';
 import Pagination from '../components/Pagination';
 import { SearchContext } from '../App';
+import axios from 'axios';
 
 const Home = () => {
   const { searchValue } = useContext(SearchContext);
 
   const activeCategoryId = useSelector((state) => state.filters.activeCategoryId);
   const sortOptions = useSelector((state) => state.filters.sort);
+
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
@@ -24,12 +26,12 @@ const Home = () => {
     const category = activeCategoryId > 0 ? `&category=${activeCategoryId}` : '';
 
     setLoading(true);
-    fetch(
-      `https://62cbe0dea080052930a0692f.mockapi.io/items?${page}&sortBy=${property}&order=${order}${search}${category}`
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        setItems(data);
+    axios
+      .get(
+        `https://62cbe0dea080052930a0692f.mockapi.io/items?${page}&sortBy=${property}&order=${order}${search}${category}`
+      )
+      .then((res) => {
+        setItems(res.data);
         setLoading(false);
       });
 
