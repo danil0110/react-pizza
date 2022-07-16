@@ -18,7 +18,6 @@ const Home = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const isMountedRef = useRef(false);
   const isSearchRef = useRef(false);
-  const isRedirectRef = useRef(false);
 
   const { searchValue } = useContext(SearchContext);
   const activeCategoryId = useSelector((state) => state.filters.activeCategoryId);
@@ -46,21 +45,9 @@ const Home = () => {
     window.scrollTo(0, 0);
   };
 
-  // ! Setting default query params from initial state, reloading page
-  // ! and clicking on header link - rerenders even though state hasn't been changed
-  // If clicked on logo link in Header (set address to '/' without query params)
-  useEffect(() => {
-    if (isMountedRef.current && !location.search) {
-      isRedirectRef.current = true;
-      dispatch(setFilters(initialState));
-      setSearchParams({});
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [location.search]);
-
   // If component was already rendered
   useEffect(() => {
-    if (isMountedRef.current && !isRedirectRef.current) {
+    if (isMountedRef.current) {
       setSearchParams({
         categoryId: activeCategoryId,
         sortBy: sortOptions.property,
@@ -70,7 +57,6 @@ const Home = () => {
     }
 
     isMountedRef.current = true;
-    isRedirectRef.current = false;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeCategoryId, sortOptions, currentPage]);
 

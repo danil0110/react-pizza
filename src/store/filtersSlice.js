@@ -28,7 +28,8 @@ const filtersSlice = createSlice({
     setFilters(state, action) {
       state.activeCategoryId = action.payload.activeCategoryId;
       state.currentPage = action.payload.currentPage;
-      state.sort = action.payload.sort;
+      state.sort.property = action.payload.sort.property;
+      state.sort.order = action.payload.sort.order;
     }
   }
 });
