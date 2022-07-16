@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = {
+export const initialState = {
   activeCategoryId: 0,
   sort: {
     property: 'rating',
@@ -24,10 +24,16 @@ const filtersSlice = createSlice({
     },
     setCurrentPage(state, action) {
       state.currentPage = action.payload;
+    },
+    setFilters(state, action) {
+      state.activeCategoryId = action.payload.activeCategoryId;
+      state.currentPage = action.payload.currentPage;
+      state.sort = action.payload.sort;
     }
   }
 });
 
-export const { setCategory, setSortProperty, setSortOrder, setCurrentPage } = filtersSlice.actions;
+export const { setCategory, setSortProperty, setSortOrder, setCurrentPage, setFilters } =
+  filtersSlice.actions;
 
 export default filtersSlice.reducer;
