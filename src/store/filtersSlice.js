@@ -5,7 +5,8 @@ const initialState = {
   sort: {
     property: 'rating',
     order: 'desc'
-  }
+  },
+  currentPage: 1
 };
 
 const filtersSlice = createSlice({
@@ -20,10 +21,13 @@ const filtersSlice = createSlice({
     },
     setSortOrder(state, action) {
       state.sort.order = action.payload;
+    },
+    setCurrentPage(state, action) {
+      state.currentPage = action.payload;
     }
   }
 });
 
-export const { setCategory, setSortProperty, setSortOrder } = filtersSlice.actions;
+export const { setCategory, setSortProperty, setSortOrder, setCurrentPage } = filtersSlice.actions;
 
 export default filtersSlice.reducer;
