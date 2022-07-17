@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { useLocation, useSearchParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -7,9 +7,8 @@ import Sort from '../components/Sort';
 import PizzaBlock from '../components/PizzaBlock';
 import Skeleton from '../components/PizzaBlock/Skeleton';
 import Pagination from '../components/Pagination';
-import { SearchContext } from '../App';
 
-import { initialState, setFilters } from '../store/slices/filtersSlice';
+import { initialState, selectSort, setFilters } from '../store/slices/filtersSlice';
 import { fetchPizzas } from '../store/slices/pizzasSlice';
 
 const Home = () => {
@@ -19,13 +18,11 @@ const Home = () => {
   const isMountedRef = useRef(false);
   const isSearchRef = useRef(false);
 
-  const { searchValue } = useContext(SearchContext);
-  const activeCategoryId = useSelector((state) => state.filters.activeCategoryId);
-  const sortOptions = useSelector((state) => state.filters.sort);
-  const currentPage = useSelector((state) => state.filters.currentPage);
+  const sortOptions = useSelector(selectSort);
+  const searchValue = useSelector((state) => state.filters.searchValue);
   const { items, status } = useSelector((state) => state.pizzas);
-  // const [items, setItems] = useState([]);
-  // const [loading, setLoading] = useState(true);
+  const activeCategoryId = useSelector((state) => state.filters.activeCategoryId);
+  const currentPage = useSelector((state) => state.filters.currentPage);
 
   const getPizzas = () => {
     const { property, order } = sortOptions;
@@ -33,7 +30,6 @@ const Home = () => {
     const search = searchValue.trim().length > 0 ? `&search=${searchValue.trim()}` : '';
     const category = activeCategoryId > 0 ? `&category=${activeCategoryId}` : '';
 
-    // setLoading(true);
     dispatch(fetchPizzas({ page, property, order, search, category }));
 
     window.scrollTo(0, 0);
@@ -87,7 +83,7 @@ const Home = () => {
   return (
     <div className='container'>
       <div className='content__top'>
-        <Categories />
+        <Categories activeCategoryId={activeCategoryId} />
         <Sort />
       </div>
       <h2 className='content__title'>Все пиццы</h2>
@@ -105,7 +101,7 @@ const Home = () => {
             : items.map((pizza) => <PizzaBlock key={pizza.id} {...pizza} />)}
         </div>
       )}
-      <Pagination />
+      <Pagination currentPage={currentPage} />
     </div>
   );
 };

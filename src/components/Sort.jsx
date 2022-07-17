@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { setSortOrder, setSortProperty } from '../store/slices/filtersSlice';
+import { selectSort, setSortOrder, setSortProperty } from '../store/slices/filtersSlice';
 
 const Sort = () => {
   const dispatch = useDispatch();
-  const options = useSelector((state) => state.filters.sort);
+  const options = useSelector(selectSort);
   const [open, setOpen] = useState(false);
   const sortRef = useRef();
 
