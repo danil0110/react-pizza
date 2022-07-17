@@ -6,6 +6,7 @@ import { clearCart, selectCart } from '../store/slices/cartSlice';
 import CartItem from '../components/CartItem';
 import CartEmpty from '../components/CartEmpty';
 
+// TODO: make correct cart logic with pizzas of different types and sizes
 const Cart = () => {
   const dispatch = useDispatch();
   const { items, totalCount, totalPrice } = useSelector(selectCart);

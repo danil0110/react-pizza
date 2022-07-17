@@ -1,0 +1,18 @@
+.root {
+  width: 100px;
+  height: 100px;
+  margin: 100px auto;
+  border: 5px solid rgba(255, 223, 141, 0.3);
+  border-top-color: rgba(255, 223, 141, 1);
+  border-radius: 100%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
