@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { setSortOrder, setSortProperty } from '../store/filtersSlice';
@@ -6,8 +6,19 @@ import { setSortOrder, setSortProperty } from '../store/filtersSlice';
 const Sort = () => {
   const dispatch = useDispatch();
   const options = useSelector((state) => state.filters.sort);
-
   const [open, setOpen] = useState(false);
+  const sortRef = useRef();
+
+  useEffect(() => {
+    const onClickOutside = (e) => {
+      if (!e.path.includes(sortRef.current)) {
+        setOpen(false);
+      }
+    };
+
+    document.body.addEventListener('click', onClickOutside);
+    return () => document.body.removeEventListener('click', onClickOutside);
+  }, []);
 
   const sortByLabels = {
     rating: 'популярности',
@@ -26,7 +37,7 @@ const Sort = () => {
   };
 
   return (
-    <div className='sort'>
+    <div className='sort' ref={sortRef}>
       <div className='sort__label'>
         <div className='sort__arrow-wrapper' onClick={onClickOrder}>
           <svg
