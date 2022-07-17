@@ -10,7 +10,7 @@ import Skeleton from '../components/PizzaBlock/Skeleton';
 import Pagination from '../components/Pagination';
 import { SearchContext } from '../App';
 
-import { initialState, setFilters } from '../store/filtersSlice';
+import { initialState, setFilters } from '../store/slices/filtersSlice';
 
 const Home = () => {
   const dispatch = useDispatch();

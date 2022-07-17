@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { setSortOrder, setSortProperty } from '../store/filtersSlice';
+import { setSortOrder, setSortProperty } from '../store/slices/filtersSlice';
 
 const Sort = () => {
   const dispatch = useDispatch();
@@ -11,7 +11,7 @@ const Sort = () => {
 
   useEffect(() => {
     const onClickOutside = (e) => {
-      if (!e.path.includes(sortRef.current)) {
+      if (!e.composedPath().includes(sortRef.current)) {
         setOpen(false);
       }
     };

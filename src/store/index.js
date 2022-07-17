@@ -1,8 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit';
-import filters from './filtersSlice';
+import filters from './slices/filtersSlice';
+import cart from './slices/cartSlice';
 
 const store = configureStore({
-  reducer: { filters },
+  reducer: { filters, cart },
   devTools: process.env.NODE_ENV === 'development'
 });
 

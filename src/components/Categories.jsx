@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { setCategory } from '../store/filtersSlice';
+import { setCategory } from '../store/slices/filtersSlice';
 
 const Categories = () => {
   const dispatch = useDispatch();
