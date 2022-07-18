@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { selectSort, setSortOrder, setSortProperty } from '../store/slices/filtersSlice';
@@ -10,8 +10,8 @@ const Sort: React.FC = () => {
   const sortRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const onClickOutside = (e: any) => {
-      if (!e.composedPath().includes(sortRef.current)) {
+    const onClickOutside = (e: MouseEvent) => {
+      if (sortRef.current && !e.composedPath().includes(sortRef.current)) {
         setOpen(false);
       }
     };

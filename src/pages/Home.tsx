@@ -8,7 +8,13 @@ import PizzaBlock from '../components/PizzaBlock';
 import Skeleton from '../components/PizzaBlock/Skeleton';
 import Pagination from '../components/Pagination';
 
-import { initialState, selectSort, setFilters } from '../store/slices/filtersSlice';
+import {
+  initialState,
+  selectSort,
+  setCategory,
+  setCurrentPage,
+  setFilters
+} from '../store/slices/filtersSlice';
 import { fetchPizzas } from '../store/slices/pizzasSlice';
 
 const Home: React.FC = () => {
@@ -81,10 +87,18 @@ const Home: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeCategoryId, sortOptions, searchValue, currentPage]);
 
+  const onChangeCategory = (categoryId: number) => {
+    dispatch(setCategory(categoryId));
+  };
+
+  const onPageChange = (e: { selected: number }) => {
+    dispatch(setCurrentPage(e.selected + 1));
+  };
+
   return (
     <div className='container'>
       <div className='content__top'>
-        <Categories activeCategoryId={activeCategoryId} />
+        <Categories activeCategoryId={activeCategoryId} onChangeCategory={onChangeCategory} />
         <Sort />
       </div>
       <h2 className='content__title'>Все пиццы</h2>
@@ -102,7 +116,7 @@ const Home: React.FC = () => {
             : items.map((pizza: any) => <PizzaBlock key={pizza.id} {...pizza} />)}
         </div>
       )}
-      <Pagination currentPage={currentPage} />
+      <Pagination currentPage={currentPage} pageCount={3} onPageChange={onPageChange} />
     </div>
   );
 };

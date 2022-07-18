@@ -24,12 +24,10 @@ const CartItem: React.FC<CartItemProps> = ({ id, title, type, size, price, count
       count === 1 &&
       window.confirm(`Вы уверены, что хотите убрать пиццу "${title}" из корзины?`)
     ) {
-      // if (window.confirm(`Вы уверены, что хотите убрать пиццу ${title} из корзины?`)) {
-      dispatch(minusItem(id));
-      // }
-    } else {
-      dispatch(minusItem(id));
+      return dispatch(minusItem(id));
     }
+
+    dispatch(minusItem(id));
   };
 
   const onClickRemove = () => {
