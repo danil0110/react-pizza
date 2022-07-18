@@ -2,6 +2,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Spinner from '../components/Spinner';
+import { IPizzaResponse } from '../interfaces/pizza.interface';
 
 const PizzaDetails: React.FC = () => {
   const { id } = useParams();
@@ -16,7 +17,9 @@ const PizzaDetails: React.FC = () => {
   useEffect(() => {
     const fetchPizza = async () => {
       try {
-        const { data } = await axios.get('https://62cbe0dea080052930a0692f.mockapi.io/items/' + id);
+        const { data } = await axios.get<IPizzaResponse>(
+          'https://62cbe0dea080052930a0692f.mockapi.io/items/' + id
+        );
         setPizza(data);
       } catch (error) {
         alert('К сожалению, пицца не была найдена.');

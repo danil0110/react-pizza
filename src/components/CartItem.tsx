@@ -1,4 +1,5 @@
-import { useDispatch } from 'react-redux';
+import { IPizzaCart } from '../interfaces/pizza.interface';
+import { useAppDispatch } from '../store';
 import { addItem, minusItem, removeItem } from '../store/slices/cartSlice';
 
 type CartItemProps = {
@@ -12,11 +13,11 @@ type CartItemProps = {
 };
 
 const CartItem: React.FC<CartItemProps> = ({ id, title, type, size, price, count, imageUrl }) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const totalPrice = price * count;
 
   const onClickPlus = () => {
-    dispatch(addItem({ id }));
+    dispatch(addItem({ id } as IPizzaCart));
   };
 
   const onClickMinus = () => {

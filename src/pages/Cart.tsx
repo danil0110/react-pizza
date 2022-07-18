@@ -1,14 +1,15 @@
 import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import { clearCart, selectCart } from '../store/slices/cartSlice';
 
 import CartItem from '../components/CartItem';
 import CartEmpty from '../components/CartEmpty';
+import { useAppDispatch } from '../store';
 
 // TODO: make correct cart logic with pizzas of different types and sizes
 const Cart: React.FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { items, totalCount, totalPrice } = useSelector(selectCart);
 
   const onClickClear = () => {

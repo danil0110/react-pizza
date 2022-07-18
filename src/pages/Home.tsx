@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { useLocation, useSearchParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import Categories from '../components/Categories';
 import Sort from '../components/Sort';
@@ -13,22 +13,25 @@ import {
   selectSort,
   setCategory,
   setCurrentPage,
-  setFilters
+  setFilters,
+  SortOrders,
+  SortProperties
 } from '../store/slices/filtersSlice';
 import { fetchPizzas } from '../store/slices/pizzasSlice';
+import { RootState, useAppDispatch } from '../store';
 
 const Home: React.FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const location = useLocation();
   const [searchParams, setSearchParams] = useSearchParams();
   const isMountedRef = useRef(false);
   const isSearchRef = useRef(false);
 
   const sortOptions = useSelector(selectSort);
-  const searchValue = useSelector((state: any) => state.filters.searchValue);
-  const { items, status } = useSelector((state: any) => state.pizzas);
-  const activeCategoryId = useSelector((state: any) => state.filters.activeCategoryId);
-  const currentPage = useSelector((state: any) => state.filters.currentPage);
+  const searchValue = useSelector((state: RootState) => state.filters.searchValue);
+  const { items, status } = useSelector((state: RootState) => state.pizzas);
+  const activeCategoryId = useSelector((state: RootState) => state.filters.activeCategoryId);
+  const currentPage = useSelector((state: RootState) => state.filters.currentPage);
 
   const getPizzas = () => {
     const { property, order } = sortOptions;
@@ -46,10 +49,10 @@ const Home: React.FC = () => {
   useEffect(() => {
     if (isMountedRef.current) {
       setSearchParams({
-        categoryId: activeCategoryId,
+        categoryId: String(activeCategoryId),
         sortBy: sortOptions.property,
         order: sortOptions.order,
-        page: currentPage
+        page: String(currentPage)
       });
     }
 
@@ -62,8 +65,9 @@ const Home: React.FC = () => {
     if (location.search) {
       const activeCategoryId = searchParams.get('categoryId') || initialState.activeCategoryId;
       const currentPage = searchParams.get('page') || initialState.currentPage;
-      const property = searchParams.get('sortBy') || initialState.sort.property;
-      const order = searchParams.get('order') || initialState.sort.order;
+      const property = (searchParams.get('sortBy') as SortProperties) || initialState.sort.property;
+      const order: SortOrders =
+        (searchParams.get('order') as SortOrders) || initialState.sort.order;
 
       const filters = {
         activeCategoryId: Number(activeCategoryId),

@@ -1,10 +1,17 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { useAppDispatch } from '../store';
 
-import { selectSort, setSortOrder, setSortProperty } from '../store/slices/filtersSlice';
+import {
+  selectSort,
+  setSortOrder,
+  setSortProperty,
+  SortOrders,
+  SortProperties
+} from '../store/slices/filtersSlice';
 
 const Sort: React.FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const options: { property: string; order: string } = useSelector(selectSort);
   const [open, setOpen] = useState(false);
   const sortRef = useRef<HTMLDivElement>(null);
@@ -26,13 +33,13 @@ const Sort: React.FC = () => {
     title: 'алфавиту'
   };
 
-  const onClickSortProperty = (value: string) => {
+  const onClickSortProperty = (value: SortProperties) => {
     if (value !== options.property) dispatch(setSortProperty(value));
     setOpen(false);
   };
 
   const onClickOrder = () => {
-    const order = options.order === 'asc' ? 'desc' : 'asc';
+    const order = options.order === 'asc' ? SortOrders.DESC : SortOrders.ASC;
     dispatch(setSortOrder(order));
   };
 
@@ -66,7 +73,7 @@ const Sort: React.FC = () => {
               <li
                 key={idx}
                 className={item[0] === options.property ? 'active' : ''}
-                onClick={() => onClickSortProperty(item[0])}
+                onClick={() => onClickSortProperty(item[0] as SortProperties)}
               >
                 {item[1]}
               </li>
