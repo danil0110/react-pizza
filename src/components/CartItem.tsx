@@ -1,6 +1,6 @@
 import { IPizzaCart } from '../interfaces/pizza.interface';
 import { useAppDispatch } from '../store';
-import { addItem, minusItem, removeItem } from '../store/slices/cartSlice';
+import { addItem, minusItem, removeItem } from '../store/cart/slice';
 
 type CartItemProps = {
   id: string;
@@ -21,14 +21,13 @@ const CartItem: React.FC<CartItemProps> = ({ id, title, type, size, price, count
   };
 
   const onClickMinus = () => {
-    if (
-      count === 1 &&
-      window.confirm(`Вы уверены, что хотите убрать пиццу "${title}" из корзины?`)
-    ) {
-      return dispatch(minusItem(id));
+    if (count === 1) {
+      if (window.confirm(`Вы уверены, что хотите убрать пиццу "${title}" из корзины?`)) {
+        dispatch(minusItem(id));
+      }
+    } else {
+      dispatch(minusItem(id));
     }
-
-    dispatch(minusItem(id));
   };
 
   const onClickRemove = () => {

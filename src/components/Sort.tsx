@@ -1,14 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from '../store';
+import { selectSort } from '../store/filters/selectors';
 
-import {
-  selectSort,
-  setSortOrder,
-  setSortProperty,
-  SortOrders,
-  SortProperties
-} from '../store/slices/filtersSlice';
+import { setSortOrder, setSortProperty } from '../store/filters/slice';
+import { SortOrders, SortProperties } from '../store/filters/types';
 
 const Sort: React.FC = () => {
   const dispatch = useAppDispatch();

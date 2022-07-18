@@ -8,17 +8,11 @@ import PizzaBlock from '../components/PizzaBlock';
 import Skeleton from '../components/PizzaBlock/Skeleton';
 import Pagination from '../components/Pagination';
 
-import {
-  initialState,
-  selectSort,
-  setCategory,
-  setCurrentPage,
-  setFilters,
-  SortOrders,
-  SortProperties
-} from '../store/slices/filtersSlice';
-import { fetchPizzas } from '../store/slices/pizzasSlice';
 import { RootState, useAppDispatch } from '../store';
+import { selectSort } from '../store/filters/selectors';
+import { initialState, setCategory, setCurrentPage, setFilters } from '../store/filters/slice';
+import { SortOrders, SortProperties } from '../store/filters/types';
+import { fetchPizzas } from '../store/pizzas/asyncActions';
 
 const Home: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -39,7 +33,6 @@ const Home: React.FC = () => {
     const search = searchValue.trim().length > 0 ? `&search=${searchValue.trim()}` : '';
     const category = activeCategoryId > 0 ? `&category=${activeCategoryId}` : '';
 
-    // @ts-ignore
     dispatch(fetchPizzas({ page, property, order, search, category }));
 
     window.scrollTo(0, 0);

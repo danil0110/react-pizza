@@ -3,7 +3,8 @@ import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { IPizzaCart } from '../../interfaces/pizza.interface';
 import { useAppDispatch } from '../../store';
-import { addItem, selectCartItemById } from '../../store/slices/cartSlice';
+import { addItem } from '../../store/cart/slice';
+import { selectCartItemById } from '../../store/cart/selectors';
 
 type PizzaBlockProps = {
   id: string;

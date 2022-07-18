@@ -1,14 +1,27 @@
-import { Link } from 'react-router-dom';
+import { useEffect, useRef } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-import { selectCart } from '../store/slices/cartSlice';
+import { selectCart } from '../store/cart/selectors';
 
 import Search from './Search';
 
 import logo from '../assets/img/pizza-logo.svg';
 
 const Header: React.FC = () => {
-  const { totalCount, totalPrice } = useSelector(selectCart);
+  const location = useLocation();
+  const { items, totalCount, totalPrice } = useSelector(selectCart);
+  const isMountedRef = useRef(false);
+
+  // Save to local storage
+  useEffect(() => {
+    if (isMountedRef.current) {
+      const json = JSON.stringify(items);
+      localStorage.setItem('cart', json);
+    }
+
+    isMountedRef.current = true;
+  }, [items]);
 
   return (
     <div className='header'>
@@ -20,7 +33,7 @@ const Header: React.FC = () => {
             <p>самая вкусная пицца во вселенной</p>
           </div>
         </Link>
-        <Search />
+        {location.pathname !== '/cart' ? <Search /> : null}
         <div className='header__cart'>
           <Link to='/cart' className='button button--cart'>
             <span>{totalPrice} ₴</span>
