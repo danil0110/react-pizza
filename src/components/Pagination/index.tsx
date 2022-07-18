@@ -4,7 +4,11 @@ import { setCurrentPage } from '../../store/slices/filtersSlice';
 
 import styles from './Pagination.module.scss';
 
-const Pagination = ({ currentPage }) => {
+type PaginationProps = {
+  currentPage: number;
+};
+
+const Pagination: React.FC<PaginationProps> = ({ currentPage }) => {
   const dispatch = useDispatch();
 
   return (
@@ -15,7 +19,6 @@ const Pagination = ({ currentPage }) => {
       pageRangeDisplayed={4}
       pageCount={3}
       previousLabel='<'
-      renderOnZeroPageCount={null}
       containerClassName={styles.container}
       pageClassName={styles.item}
       pageLinkClassName={styles.link}

@@ -11,7 +11,7 @@ import Pagination from '../components/Pagination';
 import { initialState, selectSort, setFilters } from '../store/slices/filtersSlice';
 import { fetchPizzas } from '../store/slices/pizzasSlice';
 
-const Home = () => {
+const Home: React.FC = () => {
   const dispatch = useDispatch();
   const location = useLocation();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -19,10 +19,10 @@ const Home = () => {
   const isSearchRef = useRef(false);
 
   const sortOptions = useSelector(selectSort);
-  const searchValue = useSelector((state) => state.filters.searchValue);
-  const { items, status } = useSelector((state) => state.pizzas);
-  const activeCategoryId = useSelector((state) => state.filters.activeCategoryId);
-  const currentPage = useSelector((state) => state.filters.currentPage);
+  const searchValue = useSelector((state: any) => state.filters.searchValue);
+  const { items, status } = useSelector((state: any) => state.pizzas);
+  const activeCategoryId = useSelector((state: any) => state.filters.activeCategoryId);
+  const currentPage = useSelector((state: any) => state.filters.currentPage);
 
   const getPizzas = () => {
     const { property, order } = sortOptions;
@@ -30,6 +30,7 @@ const Home = () => {
     const search = searchValue.trim().length > 0 ? `&search=${searchValue.trim()}` : '';
     const category = activeCategoryId > 0 ? `&category=${activeCategoryId}` : '';
 
+    // @ts-ignore
     dispatch(fetchPizzas({ page, property, order, search, category }));
 
     window.scrollTo(0, 0);
@@ -98,7 +99,7 @@ const Home = () => {
         <div className='content__items'>
           {status === 'loading'
             ? [...new Array(6)].map((_, idx) => <Skeleton key={idx} />)
-            : items.map((pizza) => <PizzaBlock key={pizza.id} {...pizza} />)}
+            : items.map((pizza: any) => <PizzaBlock key={pizza.id} {...pizza} />)}
         </div>
       )}
       <Pagination currentPage={currentPage} />

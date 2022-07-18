@@ -3,14 +3,14 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { selectSort, setSortOrder, setSortProperty } from '../store/slices/filtersSlice';
 
-const Sort = () => {
+const Sort: React.FC = () => {
   const dispatch = useDispatch();
-  const options = useSelector(selectSort);
+  const options: { property: string; order: string } = useSelector(selectSort);
   const [open, setOpen] = useState(false);
-  const sortRef = useRef();
+  const sortRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const onClickOutside = (e) => {
+    const onClickOutside = (e: any) => {
       if (!e.composedPath().includes(sortRef.current)) {
         setOpen(false);
       }
@@ -26,7 +26,7 @@ const Sort = () => {
     title: 'алфавиту'
   };
 
-  const onClickSortProperty = (value) => {
+  const onClickSortProperty = (value: string) => {
     if (value !== options.property) dispatch(setSortProperty(value));
     setOpen(false);
   };
@@ -41,7 +41,7 @@ const Sort = () => {
       <div className='sort__label'>
         <div className='sort__arrow-wrapper' onClick={onClickOrder}>
           <svg
-            style={options.order === 'desc' ? { transform: 'rotate(180deg)' } : null}
+            style={options.order === 'desc' ? { transform: 'rotate(180deg)' } : {}}
             width='10'
             height='6'
             viewBox='0 0 10 6'
@@ -55,7 +55,9 @@ const Sort = () => {
           </svg>
         </div>
         <b>Сортировка по:</b>
-        <span onClick={() => setOpen(!open)}>{sortByLabels[options.property]}</span>
+        <span onClick={() => setOpen(!open)}>
+          {sortByLabels[options.property as keyof { rating: string; price: string; title: string }]}
+        </span>
       </div>
       {open && (
         <div className='sort__popup'>
@@ -63,7 +65,7 @@ const Sort = () => {
             {Object.entries(sortByLabels).map((item, idx) => (
               <li
                 key={idx}
-                className={item[0] === options.property ? 'active' : null}
+                className={item[0] === options.property ? 'active' : ''}
                 onClick={() => onClickSortProperty(item[0])}
               >
                 {item[1]}

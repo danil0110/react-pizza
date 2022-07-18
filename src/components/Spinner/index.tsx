@@ -1,6 +1,6 @@
 import styles from './Spinner.module.scss';
 
-const Spinner = () => {
+const Spinner: React.FC = () => {
   return <div className={styles.root}></div>;
 };
 

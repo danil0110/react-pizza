@@ -9,23 +9,23 @@ import styles from './Search.module.scss';
 const Search = () => {
   const dispatch = useDispatch();
 
-  const [value, setValue] = useState('');
-  const inputRef = useRef();
+  const [value, setValue] = useState<string>('');
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const onResetInput = () => {
     setValue('');
     dispatch(setSearchValue(''));
-    inputRef.current.focus();
+    inputRef.current?.focus();
   };
 
-  const onChangeInput = (e) => {
+  const onChangeInput = (e: any) => {
     setValue(e.target.value);
     onChangeSearchValue(e.target.value);
   };
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const onChangeSearchValue = useCallback(
-    debounce((str) => dispatch(setSearchValue(str)), 750),
+    debounce((str: string) => dispatch(setSearchValue(str)), 750),
     []
   );
 

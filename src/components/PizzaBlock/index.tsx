@@ -3,10 +3,19 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { addItem, selectCartItemById } from '../../store/slices/cartSlice';
 
-const PizzaBlock = ({ id, title, price, imageUrl, types, sizes }) => {
+type PizzaBlockProps = {
+  id: string;
+  title: string;
+  price: number;
+  imageUrl: string;
+  types: number[];
+  sizes: number[];
+};
+
+const PizzaBlock: React.FC<PizzaBlockProps> = ({ id, title, price, imageUrl, types, sizes }) => {
   const dispatch = useDispatch();
-  const [activeSize, setActiveSize] = useState(0);
-  const [activeType, setActiveType] = useState(types[0]);
+  const [activeSize, setActiveSize] = useState<number>(0);
+  const [activeType, setActiveType] = useState<number>(types[0]);
 
   const item = useSelector(selectCartItemById(id));
   const count = item ? item.count : 0;
@@ -37,7 +46,7 @@ const PizzaBlock = ({ id, title, price, imageUrl, types, sizes }) => {
           {types.map((typeId) => (
             <li
               key={typeId}
-              className={activeType === typeId ? 'active' : null}
+              className={activeType === typeId ? 'active' : ''}
               onClick={() => setActiveType(typeId)}
             >
               {typeLabels[typeId]}
@@ -48,7 +57,7 @@ const PizzaBlock = ({ id, title, price, imageUrl, types, sizes }) => {
           {sizes.map((size, idx) => (
             <li
               key={idx}
-              className={activeSize === idx ? 'active' : null}
+              className={activeSize === idx ? 'active' : ''}
               onClick={() => setActiveSize(idx)}
             >
               {size} см.

@@ -7,7 +7,7 @@ import CartItem from '../components/CartItem';
 import CartEmpty from '../components/CartEmpty';
 
 // TODO: make correct cart logic with pizzas of different types and sizes
-const Cart = () => {
+const Cart: React.FC = () => {
   const dispatch = useDispatch();
   const { items, totalCount, totalPrice } = useSelector(selectCart);
 
@@ -97,7 +97,7 @@ const Cart = () => {
           </div>
         </div>
         <div className='content__items'>
-          {items.map((item) => (
+          {items.map((item: any) => (
             <CartItem key={item.id} {...item} />
           ))}
         </div>
