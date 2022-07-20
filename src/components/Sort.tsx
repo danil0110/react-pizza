@@ -25,7 +25,7 @@ const Sort: React.FC = () => {
 
   const sortByLabels = {
     rating: 'популярности',
-    price: 'цене',
+    startPrice: 'цене',
     title: 'алфавиту'
   };
 
@@ -59,7 +59,11 @@ const Sort: React.FC = () => {
         </div>
         <b>Сортировка по:</b>
         <span onClick={() => setOpen(!open)}>
-          {sortByLabels[options.property as keyof { rating: string; price: string; title: string }]}
+          {
+            sortByLabels[
+              options.property as keyof { rating: string; startPrice: string; title: string }
+            ]
+          }
         </span>
       </div>
       {open && (

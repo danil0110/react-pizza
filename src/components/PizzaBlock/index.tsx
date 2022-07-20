@@ -1,42 +1,53 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { IPizzaCart } from '../../interfaces/pizza.interface';
+import { IPizzaCart, IPizzaResponse } from '../../interfaces/pizza.interface';
 import { useAppDispatch } from '../../store';
 import { addItem } from '../../store/cart/slice';
 import { selectCartItemById } from '../../store/cart/selectors';
 
-type PizzaBlockProps = {
-  id: string;
-  title: string;
-  price: number;
-  imageUrl: string;
-  types: number[];
-  sizes: number[];
-};
-
-const PizzaBlock: React.FC<PizzaBlockProps> = ({ id, title, price, imageUrl, types, sizes }) => {
-  const dispatch = useAppDispatch();
-  const [activeSize, setActiveSize] = useState<number>(0);
-  const [activeType, setActiveType] = useState<number>(types[0]);
-
-  const item = useSelector(selectCartItemById(id));
-  const count = item ? item.count : 0;
-
+const PizzaBlock: React.FC<IPizzaResponse> = ({
+  id,
+  title,
+  startPrice,
+  prices,
+  imageUrl,
+  types,
+  sizes
+}) => {
   const typeLabels = ['тонкое', 'традиционное'];
+
+  const dispatch = useAppDispatch();
+  const [activeType, setActiveType] = useState<number>(types[0]);
+  const [activeSize, setActiveSize] = useState<number>(sizes[0]);
+  const [currentPrice, setCurrentPrice] = useState(startPrice);
+  const itemId = `${id}-${typeLabels[activeType]}-${activeSize}`;
+  const item = useSelector(selectCartItemById(itemId));
+
+  const count = item ? item.count : 0;
 
   const onClickAdd = () => {
     const item: IPizzaCart = {
-      id,
+      id: itemId,
       title,
-      price,
+      price: currentPrice,
       type: typeLabels[activeType],
-      size: sizes[activeSize],
+      size: activeSize,
       imageUrl,
       count: 1
     };
 
     dispatch(addItem(item));
+  };
+
+  const onChangeType = (typeId: number) => {
+    setActiveType(typeId);
+    setCurrentPrice(prices[typeId][activeSize]);
+  };
+
+  const onChangeSize = (size: number) => {
+    setActiveSize(size);
+    setCurrentPrice(prices[activeType][size]);
   };
 
   return (
@@ -51,7 +62,7 @@ const PizzaBlock: React.FC<PizzaBlockProps> = ({ id, title, price, imageUrl, typ
             <li
               key={typeId}
               className={activeType === typeId ? 'active' : ''}
-              onClick={() => setActiveType(typeId)}
+              onClick={() => onChangeType(typeId)}
             >
               {typeLabels[typeId]}
             </li>
@@ -61,8 +72,8 @@ const PizzaBlock: React.FC<PizzaBlockProps> = ({ id, title, price, imageUrl, typ
           {sizes.map((size, idx) => (
             <li
               key={idx}
-              className={activeSize === idx ? 'active' : ''}
-              onClick={() => setActiveSize(idx)}
+              className={activeSize === size ? 'active' : ''}
+              onClick={() => onChangeSize(size)}
             >
               {size} см.
             </li>
@@ -70,7 +81,7 @@ const PizzaBlock: React.FC<PizzaBlockProps> = ({ id, title, price, imageUrl, typ
         </ul>
       </div>
       <div className='pizza-block__bottom'>
-        <div className='pizza-block__price'>от {price} ₴</div>
+        <div className='pizza-block__price'>от {currentPrice} ₴</div>
         <button onClick={onClickAdd} className='button button--outline button--add'>
           <svg
             width='12'

@@ -4,7 +4,8 @@ export interface IPizzaResponse {
   title: string;
   types: number[];
   sizes: number[];
-  price: number;
+  startPrice: number;
+  prices: Record<number, Record<number, number>>;
   category: number;
   rating: number;
 }

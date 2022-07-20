@@ -110,7 +110,7 @@ const Home: React.FC = () => {
         <div className='content__items'>
           {status === 'loading'
             ? [...new Array(6)].map((_, idx) => <Skeleton key={idx} />)
-            : items.map((pizza: any) => <PizzaBlock key={pizza.id} {...pizza} />)}
+            : items.map((pizza) => <PizzaBlock key={pizza.id} {...pizza} />)}
         </div>
       )}
       <Pagination currentPage={currentPage} pageCount={3} onPageChange={onPageChange} />

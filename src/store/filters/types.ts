@@ -10,7 +10,7 @@ export interface FiltersSliceState {
 
 export enum SortProperties {
   RATING = 'rating',
-  PRICE = 'price',
+  PRICE = 'startPrice',
   TITLE = 'title'
 }
 

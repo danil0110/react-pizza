@@ -10,7 +10,7 @@ const PizzaDetails: React.FC = () => {
 
   const [pizza, setPizza] = useState<{
     title: string;
-    price: number;
+    startPrice: number;
     imageUrl: string;
   }>();
 
@@ -40,7 +40,7 @@ const PizzaDetails: React.FC = () => {
     <div className='container'>
       <img src={pizza.imageUrl} alt={pizza.title} />
       <h2>{pizza.title}</h2>
-      <h2>{pizza.price} ₴</h2>
+      <h2>{pizza.startPrice} ₴</h2>
     </div>
   );
 };

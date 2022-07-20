@@ -49,8 +49,8 @@ const cartSlice = createSlice({
         item.count--;
       }
 
-      state.totalPrice = state.items.reduce((sum, obj) => sum + obj.price * obj.count, 0);
       state.totalCount--;
+      state.totalPrice = calcCartTotalPrice(state.items);
     },
     clearCart(state) {
       state.items = [];
