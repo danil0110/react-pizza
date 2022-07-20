@@ -1,8 +1,16 @@
 .root {
   position: relative;
 
+  @media (max-width: 889px) {
+    width: 400px;
+  }
+
+  @media (max-width: 544px) {
+    width: 100%;
+  }
+
   input {
-    width: 300px;
+    width: 100%;
     padding: 12px 40px;
     border: 1px solid rgba(0, 0, 0, 0.1);
     border-radius: 10px;

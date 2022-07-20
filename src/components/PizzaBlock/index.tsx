@@ -58,26 +58,38 @@ const PizzaBlock: React.FC<IPizzaResponse> = ({
       </Link>
       <div className='pizza-block__selector'>
         <ul>
-          {types.map((typeId) => (
-            <li
-              key={typeId}
-              className={activeType === typeId ? 'active' : ''}
-              onClick={() => onChangeType(typeId)}
-            >
-              {typeLabels[typeId]}
-            </li>
-          ))}
+          {types.map((typeId) => {
+            const active = activeType === typeId;
+            return (
+              <li
+                key={typeId}
+                className={active ? 'active' : ''}
+                onClick={() => onChangeType(typeId)}
+              >
+                {typeLabels[typeId]}
+                {active && typeId !== types[0] && (
+                  <div className='price-increase'>+{prices[typeId][sizes[0]] - startPrice} ₴</div>
+                )}
+              </li>
+            );
+          })}
         </ul>
         <ul>
-          {sizes.map((size, idx) => (
-            <li
-              key={idx}
-              className={activeSize === size ? 'active' : ''}
-              onClick={() => onChangeSize(size)}
-            >
-              {size} см.
-            </li>
-          ))}
+          {sizes.map((size, idx) => {
+            const active = activeSize === size;
+            return (
+              <li
+                key={idx}
+                className={activeSize === size ? 'active' : ''}
+                onClick={() => onChangeSize(size)}
+              >
+                {size} см.
+                {active && size !== sizes[0] && (
+                  <div className='price-increase'>+{prices[types[0]][size] - startPrice} ₴</div>
+                )}
+              </li>
+            );
+          })}
         </ul>
       </div>
       <div className='pizza-block__bottom'>

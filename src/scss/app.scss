@@ -16,6 +16,102 @@ body {
   max-width: 1400px;
 }
 
+.pizza-details {
+  display: flex;
+  gap: 50px;
+
+  @media (max-width: 750px) {
+    flex-direction: column;
+  }
+
+  &__image {
+    flex-shrink: 1;
+    display: block;
+    width: 100%;
+    max-width: 250px;
+
+    @media (max-width: 750px) {
+      margin: 0 auto;
+      margin-left: 5px;
+    }
+  }
+
+  &__selector {
+    @media (max-width: 750px) {
+      width: auto;
+    }
+
+    margin-top: 20px;
+    width: 280px;
+    display: flex;
+    background-color: #f3f3f3;
+    border-radius: 10px;
+    flex-direction: column;
+    padding: 6px;
+    text-align: center;
+
+    ul {
+      display: flex;
+      flex: 1;
+
+      &:first-of-type {
+        margin-bottom: 6px;
+      }
+
+      li {
+        position: relative;
+        padding: 8px;
+        flex: 1;
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 14px;
+        @include noselect();
+        &.active {
+          background: #ffffff;
+          box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.04);
+          border-radius: 5px;
+          cursor: auto;
+        }
+
+        .price-increase {
+          position: absolute;
+          top: -10px;
+          right: -20px;
+          z-index: 1;
+          border-radius: 5px;
+          background-color: $orange;
+          color: white;
+          padding: 2px 5px;
+        }
+      }
+    }
+  }
+
+  &__title {
+    font-weight: 800;
+  }
+
+  &__bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 20px;
+
+    @media (max-width: 750px) {
+      align-items: start;
+      flex-direction: column;
+      gap: 10px;
+    }
+  }
+
+  &__price {
+    font-weight: bold;
+    font-size: 22px;
+    line-height: 27px;
+    letter-spacing: 0.015em;
+  }
+}
+
 .content {
   padding: 40px 0;
 
