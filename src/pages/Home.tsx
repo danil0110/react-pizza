@@ -27,6 +27,8 @@ const Home: React.FC = () => {
   const activeCategoryId = useSelector((state: RootState) => state.filters.activeCategoryId);
   const currentPage = useSelector((state: RootState) => state.filters.currentPage);
 
+  const categories = ['Все', 'Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые'];
+
   const getPizzas = () => {
     const { property, order } = sortOptions;
     const page = `page=${currentPage}&limit=4`;
@@ -95,10 +97,16 @@ const Home: React.FC = () => {
   return (
     <div className='container'>
       <div className='content__top'>
-        <Categories activeCategoryId={activeCategoryId} onChangeCategory={onChangeCategory} />
+        <Categories
+          categories={categories}
+          activeCategoryId={activeCategoryId}
+          onChangeCategory={onChangeCategory}
+        />
         <Sort />
       </div>
-      <h2 className='content__title'>Все пиццы</h2>
+      <h2 className='content__title'>
+        {categories[activeCategoryId]} {activeCategoryId === 0 && 'пиццы'}
+      </h2>
       {status === 'error' ? (
         <div className='content__error-info'>
           <h2>
